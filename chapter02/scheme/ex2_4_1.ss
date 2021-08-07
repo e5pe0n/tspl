@@ -1,0 +1,28 @@
+(define print
+  (lambda (x)
+    (for-each display `(,x "\n"))
+  )
+)
+(define A
+  (lambda (a)
+    (lambda (b)
+      (let ([mul-3 (* 3 a)])
+        (let ([minus-b (- mul-3 b)] [plus-b (+ mul-3 b)])
+          (+ minus-b plus-b)
+      ))
+    )
+  )
+)
+(define B
+  (lambda (a)
+    (lambda (b)
+      (lambda (c)
+        (let ([list-abc (list a b c)])
+          (cons (car list-abc) (cdr list-abc))
+        )
+      )
+    )
+  )
+)
+(print ((A 1) 2)) ; 5
+(print (((B 1) 2) 3)) ; (1 2 3)
