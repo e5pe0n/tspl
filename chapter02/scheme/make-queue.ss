@@ -37,9 +37,12 @@
 
 (define myq (make-queue))
 
+(print myq) ; ((ignored) ignored)
 (putq! myq 'a)
+(print myq) ; ((a ignored) ignored)
 (putq! myq 'b)
 (print (getq myq))  ; a
+(print myq) ; ((a b ignored) ignored)
 (delq! myq)
 (print (getq myq))  ; b
 (delq! myq)
