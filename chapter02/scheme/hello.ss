@@ -4,6 +4,4 @@
   )
 )
 
-(define q `())
-(set-car! q 'a)
-(print q)
+(print (not #t))
