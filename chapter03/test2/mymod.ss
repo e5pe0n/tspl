@@ -1,0 +1,7 @@
+(module mymod (hello)
+  (import scheme)
+  (define (hello)
+    (display "Hello, World, I'm in mymod!")
+    (newline)
+  )
+)

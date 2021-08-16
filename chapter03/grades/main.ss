@@ -1,0 +1,11 @@
+(module main ()
+  (import scheme)
+  (import grades)
+  (define print
+    (lambda (x)
+      (for-each display `(,x "\n"))
+    )
+  )
+  (print (gpa c a c b b))
+  (print (gpa->grade 2.8))
+)
