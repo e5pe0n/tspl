@@ -20,13 +20,13 @@
     "shardulm94.trailing-spaces",
     "visualstudioexptteam.vscodeintellicode",
     "sjhuangx.vscode-scheme"
-  ]
+  ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "uname -a",
+  "postCreateCommand": "sh /workspaces/tspl/.devcontainer/setup.sh"
 
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   // "remoteUser": "vscode"
