@@ -1,4 +1,4 @@
-(module grades (gpa->grade gpa letter->number)
+(module grades (gpa->grade gpa letter->number filter cnt distribution histogram)
   (import scheme)
   (import (chicken base))
 
@@ -42,6 +42,17 @@
       )
     )
   )
+  (define filter
+    (lambda (ls f)
+      (if (null? ls)
+        `()
+        (if (f (car ls))
+          (cons (car ls) (filter (cdr ls) f))
+          (filter (cdr ls) f)
+        )
+      )
+    )
+  )
   (define gpa->grade
     (lambda (x)
       (range-case x
@@ -57,10 +68,46 @@
     (syntax-rules ()
       [
         (_ g1 g2 ...)
-        (let ([ls (map letter->number `(g1 g2 ...))])
-          (/ (apply + ls) (length ls))
+        (let ([ls (map letter->number (filter `(g1 g2 ...) (lambda (x) (not (eqv? x 'x)))))])
+          (if (null? ls)
+            0.0
+            (/ (apply + ls) (length ls))
+          )
         )
       ]
+    )
+  )
+  (define cnt
+    (lambda (ls f)
+      (length (filter ls f))
+    )
+  )
+  (define-syntax distribution
+    (syntax-rules ()
+      [
+        (_ g1 g2 ...)
+        (map
+          (lambda (x)
+            (list (cnt `(g1 g2 ...) (lambda (y) (eqv? y x))) x)
+          )
+          `(a b c d e f)
+        )
+      ]
+    )
+  )
+  (define print-bar
+    (lambda (p)
+      (let ([n (car p)] [x (cadr p)])
+        (display x)
+        (display ": ")
+        (display (make-string n #\*))
+        (newline)
+      )
+    )
+  )
+  (define histogram
+    (lambda (textual-output-port dist)
+      (for-each print-bar dist)
     )
   )
 )

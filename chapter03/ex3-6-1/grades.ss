@@ -1,4 +1,4 @@
-(module grades (gpa->grade gpa letter->number)
+(module grades (gpa->grade gpa letter->number filter)
   (import scheme)
   (import (chicken base))
 
@@ -42,6 +42,17 @@
       )
     )
   )
+  (define filter
+    (lambda (ls f)
+      (if (null? ls)
+        `()
+        (if (f (car ls))
+          (cons (car ls) (filter (cdr ls) f))
+          (filter (cdr ls) f)
+        )
+      )
+    )
+  )
   (define gpa->grade
     (lambda (x)
       (range-case x
@@ -57,8 +68,11 @@
     (syntax-rules ()
       [
         (_ g1 g2 ...)
-        (let ([ls (map letter->number `(g1 g2 ...))])
-          (/ (apply + ls) (length ls))
+        (let ([ls (map letter->number (filter `(g1 g2 ...) (lambda (x) (not (eqv? x 'x)))))])
+          (if (null? ls)
+            0.0
+            (/ (apply + ls) (length ls))
+          )
         )
       ]
     )
